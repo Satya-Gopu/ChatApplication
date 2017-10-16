@@ -13,6 +13,7 @@
 		52FD64611F953CF70011546C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52FD64601F953CF70011546C /* Assets.xcassets */; };
 		52FD64641F953CF70011546C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52FD64621F953CF70011546C /* LaunchScreen.storyboard */; };
 		52FD646F1F953CF70011546C /* FirebaseChatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD646E1F953CF70011546C /* FirebaseChatsTests.swift */; };
+		52FD647B1F955A9D0011546C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD647A1F955A9D0011546C /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		52FD646A1F953CF70011546C /* FirebaseChatsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FirebaseChatsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FD646E1F953CF70011546C /* FirebaseChatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseChatsTests.swift; sourceTree = "<group>"; };
 		52FD64701F953CF70011546C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52FD647A1F955A9D0011546C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		52FD64581F953CF70011546C /* FirebaseChats */ = {
 			isa = PBXGroup;
 			children = (
+				52FD64791F955A100011546C /* Controller */,
 				52FD64591F953CF70011546C /* AppDelegate.swift */,
 				52FD645B1F953CF70011546C /* ViewController.swift */,
 				52FD645D1F953CF70011546C /* Main.storyboard */,
@@ -94,6 +97,14 @@
 				52FD64701F953CF70011546C /* Info.plist */,
 			);
 			path = FirebaseChatsTests;
+			sourceTree = "<group>";
+		};
+		52FD64791F955A100011546C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				52FD647A1F955A9D0011546C /* LoginViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FD647B1F955A9D0011546C /* LoginViewController.swift in Sources */,
 				52FD645C1F953CF70011546C /* ViewController.swift in Sources */,
 				52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */,
 			);

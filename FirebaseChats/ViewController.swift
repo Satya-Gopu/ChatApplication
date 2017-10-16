@@ -9,14 +9,16 @@
 import UIKit
 
 class ViewController: UITableViewController {
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.view.backgroundColor = UIColor.red
+    @objc func handleLogout(){
+        let loginController = LoginViewController()
+        present(loginController, animated: true, completion: nil)
     }
 
     
