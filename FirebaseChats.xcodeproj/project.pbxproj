@@ -116,7 +116,6 @@
 				527B99AF1F969C280067EFBE /* GoogleService-Info.plist */,
 				52FD64791F955A100011546C /* Controller */,
 				52FD64591F953CF70011546C /* AppDelegate.swift */,
-				52FD645B1F953CF70011546C /* ViewController.swift */,
 				52FD645D1F953CF70011546C /* Main.storyboard */,
 				52FD64601F953CF70011546C /* Assets.xcassets */,
 				52FD64621F953CF70011546C /* LaunchScreen.storyboard */,
@@ -138,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				52FD647A1F955A9D0011546C /* LoginViewController.swift */,
+				52FD645B1F953CF70011546C /* ViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

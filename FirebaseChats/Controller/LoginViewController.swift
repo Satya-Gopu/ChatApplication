@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
     
@@ -24,6 +25,7 @@ class LoginViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(performLogin), for: .touchUpInside)
         return button
     }()
     let profileImageView : UIImageView = {
@@ -77,6 +79,30 @@ class LoginViewController: UIViewController {
         setupContainerView()
         setupProfileImageView()
         setupLoginRegisterButton()
+    }
+    
+    @objc func performLogin(){
+        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else{
+            return
+        }
+        Auth.auth().createUser(withEmail: email, password: password, completion: {
+            (user, error) in
+            if error != nil{
+                
+                print("Invalid credentials")
+            }
+            
+            let ref = Database.database().reference().child("users").child(user!.uid)
+            ref.updateChildValues(["name": name, "email":email], withCompletionBlock: {
+                (error, ref) in
+                if error != nil{
+                    print("can not save user data")
+                    
+                }
+                print("data successfully saved to database")
+            })
+        })
+        
     }
     
     func setupProfileImageView(){
