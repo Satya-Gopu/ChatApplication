@@ -26,6 +26,12 @@ class LoginViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    let profileImageView : UIImageView = {
+        let imageview = UIImageView()
+        imageview.image = UIImage(named: "profileImage")
+        imageview.translatesAutoresizingMaskIntoConstraints = false
+       return imageview
+    }()
     let nameTextField : UITextField = {
        let tf = UITextField()
         tf.placeholder = "Name"
@@ -66,19 +72,26 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red:61, green: 91, blue: 151)
         self.view.addSubview(inputContainerView)
+        self.view.addSubview(profileImageView)
         self.view.addSubview(loginRegisterButton)
-        
         setupContainerView()
+        setupProfileImageView()
         setupLoginRegisterButton()
+    }
+    
+    func setupProfileImageView(){
+        NSLayoutConstraint.activate([profileImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                     profileImageView.bottomAnchor.constraint(equalTo: inputContainerView.topAnchor, constant: -15),
+                                     profileImageView.heightAnchor.constraint(equalToConstant: 150),
+                                     profileImageView.widthAnchor.constraint(equalToConstant: 150)])
     }
     
     func setupContainerView(){
         //set the constraints for the container view: x, y, width, height
-        NSLayoutConstraint.activate([
-            inputContainerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            inputContainerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-            inputContainerView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -24),
-            inputContainerView.heightAnchor.constraint(equalToConstant: 150)])
+        NSLayoutConstraint.activate([inputContainerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                     inputContainerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+                                     inputContainerView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -24),
+                                     inputContainerView.heightAnchor.constraint(equalToConstant: 150)])
         inputContainerView.addSubview(nameTextField)
         inputContainerView.addSubview(nameSeperator)
         inputContainerView.addSubview(emailTextField)
@@ -121,13 +134,10 @@ class LoginViewController: UIViewController {
         loginRegisterButton.heightAnchor.constraint(equalToConstant: 45)])
         
     }
-
 }
 
 extension UIColor{
     convenience init(red : CGFloat, green: CGFloat, blue : CGFloat){
         self.init(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
-    
-    
 }
