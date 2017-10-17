@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		527B99B01F969C280067EFBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 527B99AF1F969C280067EFBE /* GoogleService-Info.plist */; };
 		52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD64591F953CF70011546C /* AppDelegate.swift */; };
 		52FD645C1F953CF70011546C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD645B1F953CF70011546C /* ViewController.swift */; };
 		52FD645F1F953CF70011546C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52FD645D1F953CF70011546C /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		527B99AF1F969C280067EFBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52FD64561F953CF70011546C /* FirebaseChats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseChats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FD64591F953CF70011546C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52FD645B1F953CF70011546C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 		52FD64581F953CF70011546C /* FirebaseChats */ = {
 			isa = PBXGroup;
 			children = (
+				527B99AF1F969C280067EFBE /* GoogleService-Info.plist */,
 				52FD64791F955A100011546C /* Controller */,
 				52FD64591F953CF70011546C /* AppDelegate.swift */,
 				52FD645B1F953CF70011546C /* ViewController.swift */,
@@ -191,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52FD64641F953CF70011546C /* LaunchScreen.storyboard in Resources */,
+				527B99B01F969C280067EFBE /* GoogleService-Info.plist in Resources */,
 				52FD64611F953CF70011546C /* Assets.xcassets in Resources */,
 				52FD645F1F953CF70011546C /* Main.storyboard in Resources */,
 			);
