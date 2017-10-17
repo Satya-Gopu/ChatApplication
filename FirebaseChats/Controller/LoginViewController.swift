@@ -17,6 +17,15 @@ class LoginViewController: UIViewController {
         inputContainerView.translatesAutoresizingMaskIntoConstraints = false
         return inputContainerView
         }()
+    let loginRegisterButton : UIButton = {
+        let button = UIButton(type: UIButtonType.system)
+        button.backgroundColor = UIColor(red: 80, green: 101, blue: 161)
+        button.setTitle("Register", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return UIStatusBarStyle.lightContent
@@ -25,9 +34,11 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red:61, green: 91, blue: 151)
-        //create container view for the input form
         self.view.addSubview(inputContainerView)
+        self.view.addSubview(loginRegisterButton)
+        
         setupContainerView()
+        setupLoginRegisterButton()
     }
     
     func setupContainerView(){
@@ -37,6 +48,14 @@ class LoginViewController: UIViewController {
             inputContainerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             inputContainerView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -24),
             inputContainerView.heightAnchor.constraint(equalToConstant: 150)])
+        
+    }
+    
+    func setupLoginRegisterButton(){
+        NSLayoutConstraint.activate([loginRegisterButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+        loginRegisterButton.widthAnchor.constraint(equalTo: self.inputContainerView.widthAnchor),
+        loginRegisterButton.topAnchor.constraint(equalTo: self.inputContainerView.bottomAnchor, constant: 12),
+        loginRegisterButton.heightAnchor.constraint(equalToConstant: 45)])
         
     }
 
