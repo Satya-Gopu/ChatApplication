@@ -26,6 +26,37 @@ class LoginViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    let nameTextField : UITextField = {
+       let tf = UITextField()
+        tf.placeholder = "Name"
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
+    }()
+    let nameSeperator : UIView = {
+       let view = UIView()
+        view.backgroundColor = UIColor(red: 220, green: 220, blue: 220)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    let emailTextField : UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Email"
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
+    }()
+    let emailSeperator : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 220, green: 220, blue: 220)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    let passwordTextField : UITextField = {
+        let tf = UITextField()
+        tf.placeholder = "Password"
+        tf.isSecureTextEntry = true
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        return tf
+    }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return UIStatusBarStyle.lightContent
@@ -48,6 +79,38 @@ class LoginViewController: UIViewController {
             inputContainerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             inputContainerView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -24),
             inputContainerView.heightAnchor.constraint(equalToConstant: 150)])
+        inputContainerView.addSubview(nameTextField)
+        inputContainerView.addSubview(nameSeperator)
+        inputContainerView.addSubview(emailTextField)
+        inputContainerView.addSubview(emailSeperator)
+        inputContainerView.addSubview(passwordTextField)
+        
+        //setup the name textfield constraints
+        NSLayoutConstraint.activate([nameTextField.widthAnchor.constraint(equalTo: inputContainerView.widthAnchor),
+                                     nameTextField.heightAnchor.constraint(equalTo: inputContainerView.heightAnchor, multiplier: 1/3),
+                                     nameTextField.topAnchor.constraint(equalTo: inputContainerView.topAnchor),
+                                     nameTextField.leftAnchor.constraint(equalTo: inputContainerView.leftAnchor, constant: 12)])
+        //setup name seperator constraints
+        NSLayoutConstraint.activate([nameSeperator.widthAnchor.constraint(equalTo: inputContainerView.widthAnchor),
+                                     nameSeperator.centerXAnchor.constraint(equalTo: inputContainerView.centerXAnchor),
+                                     nameSeperator.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: -2),
+                                     nameSeperator.heightAnchor.constraint(equalToConstant: 2)])
+        //setup the email textfield constraints
+        NSLayoutConstraint.activate([emailTextField.widthAnchor.constraint(equalTo: inputContainerView.widthAnchor),
+                                     emailTextField.heightAnchor.constraint(equalTo: inputContainerView.heightAnchor, multiplier: 1/3),
+                                     emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor),
+                                     emailTextField.leftAnchor.constraint(equalTo: inputContainerView.leftAnchor, constant: 12)])
+        //setup email seperator constraints
+        NSLayoutConstraint.activate([emailSeperator.widthAnchor.constraint(equalTo: inputContainerView.widthAnchor),
+                                     emailSeperator.centerXAnchor.constraint(equalTo: inputContainerView.centerXAnchor),
+                                     emailSeperator.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: -2),
+                                     emailSeperator.heightAnchor.constraint(equalToConstant: 2)])
+        
+        //setup password field constraints
+        NSLayoutConstraint.activate([passwordTextField.widthAnchor.constraint(equalTo: inputContainerView.widthAnchor),
+                                     passwordTextField.heightAnchor.constraint(equalTo: inputContainerView.heightAnchor, multiplier: 1/3),
+                                     passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
+                                     passwordTextField.leftAnchor.constraint(equalTo: inputContainerView.leftAnchor, constant: 12)])
         
     }
     
