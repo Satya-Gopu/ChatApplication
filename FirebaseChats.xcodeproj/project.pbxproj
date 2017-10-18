@@ -10,7 +10,7 @@
 		2AEE2D0CD4104FF10144A7A1 /* Pods_FirebaseChats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B967DF5D66748150E88D32D6 /* Pods_FirebaseChats.framework */; };
 		527B99B01F969C280067EFBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 527B99AF1F969C280067EFBE /* GoogleService-Info.plist */; };
 		52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD64591F953CF70011546C /* AppDelegate.swift */; };
-		52FD645C1F953CF70011546C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD645B1F953CF70011546C /* ViewController.swift */; };
+		52FD645C1F953CF70011546C /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD645B1F953CF70011546C /* MessagesController.swift */; };
 		52FD645F1F953CF70011546C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52FD645D1F953CF70011546C /* Main.storyboard */; };
 		52FD64611F953CF70011546C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52FD64601F953CF70011546C /* Assets.xcassets */; };
 		52FD64641F953CF70011546C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52FD64621F953CF70011546C /* LaunchScreen.storyboard */; };
@@ -34,7 +34,7 @@
 		527B99AF1F969C280067EFBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52FD64561F953CF70011546C /* FirebaseChats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseChats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FD64591F953CF70011546C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		52FD645B1F953CF70011546C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		52FD645B1F953CF70011546C /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		52FD645E1F953CF70011546C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		52FD64601F953CF70011546C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52FD64631F953CF70011546C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				52FD647A1F955A9D0011546C /* LoginViewController.swift */,
-				52FD645B1F953CF70011546C /* ViewController.swift */,
+				52FD645B1F953CF70011546C /* MessagesController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -361,7 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52FD647B1F955A9D0011546C /* LoginViewController.swift in Sources */,
-				52FD645C1F953CF70011546C /* ViewController.swift in Sources */,
+				52FD645C1F953CF70011546C /* MessagesController.swift in Sources */,
 				52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
