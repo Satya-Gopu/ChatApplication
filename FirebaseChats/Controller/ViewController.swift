@@ -15,10 +15,19 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
-        //ref = Database.database().reference()
+        if Auth.auth().currentUser == nil{
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+            //performSelector(onMainThread: #selector(handleLogout), with: nil, waitUntilDone: false)
+        }
     }
     
     @objc func handleLogout(){
+        do{
+            try Auth.auth().signOut()
+        }catch let error{
+            print(error)
+        }
+        
         let loginController = LoginViewController()
         present(loginController, animated: true, completion: nil)
     }
