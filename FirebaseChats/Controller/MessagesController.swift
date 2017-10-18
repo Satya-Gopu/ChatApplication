@@ -16,7 +16,14 @@ class MessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
        isuserLoggedIn()
+    }
+    
+    @objc func handleNewMessage(){
+        let newMessageController = NewMessageController()
+        present(UINavigationController(rootViewController : newMessageController), animated: true, completion: nil)
+        
     }
     
     func isuserLoggedIn(){
@@ -29,7 +36,10 @@ class MessagesController: UITableViewController {
             }
             Database.database().reference().child("users").child(userid).observeSingleEvent(of: .value, with: {
                 (snapshot) in
-                print(snapshot)
+                guard let dictionary = snapshot.value as? [String: Any] else{
+                    return
+                }
+                self.navigationItem.title = dictionary["name"] as? String
             }, withCancel: { (error) in
                 print(error.localizedDescription)
                 return
@@ -41,7 +51,7 @@ class MessagesController: UITableViewController {
         do{
             try Auth.auth().signOut()
         }catch let error{
-            print(error)
+            print(error.localizedDescription)
         }
         
         let loginController = LoginViewController()

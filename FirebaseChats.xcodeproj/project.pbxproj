@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2AEE2D0CD4104FF10144A7A1 /* Pods_FirebaseChats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B967DF5D66748150E88D32D6 /* Pods_FirebaseChats.framework */; };
+		5276D2291F974C6600D863F7 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276D2281F974C6600D863F7 /* NewMessageController.swift */; };
 		527B99B01F969C280067EFBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 527B99AF1F969C280067EFBE /* GoogleService-Info.plist */; };
 		52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD64591F953CF70011546C /* AppDelegate.swift */; };
 		52FD645C1F953CF70011546C /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD645B1F953CF70011546C /* MessagesController.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		1D641E4D3F59C3C86168E452 /* Pods-FirebaseChatsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseChatsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseChatsTests/Pods-FirebaseChatsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5276D2281F974C6600D863F7 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		527B99AF1F969C280067EFBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52FD64561F953CF70011546C /* FirebaseChats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseChats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52FD64591F953CF70011546C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				52FD647A1F955A9D0011546C /* LoginViewController.swift */,
 				52FD645B1F953CF70011546C /* MessagesController.swift */,
+				5276D2281F974C6600D863F7 /* NewMessageController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -360,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5276D2291F974C6600D863F7 /* NewMessageController.swift in Sources */,
 				52FD647B1F955A9D0011546C /* LoginViewController.swift in Sources */,
 				52FD645C1F953CF70011546C /* MessagesController.swift in Sources */,
 				52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */,
