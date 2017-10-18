@@ -139,6 +139,7 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
             if error != nil{
                 print("Something went wrong")
+                return
             }
             self.dismiss(animated: true, completion: nil)
         })
@@ -162,7 +163,7 @@ class LoginViewController: UIViewController {
                 (error, ref) in
                 if error != nil{
                     print("can not save user data")
-                    
+                    return
                 }
                 self.dismiss(animated: true, completion: nil)
             })
