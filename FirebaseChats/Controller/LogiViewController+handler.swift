@@ -80,7 +80,39 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate  = self
+        self.presentAlert(picker : picker)
+    }
+    
+    func presentAlert(picker : UIImagePickerController){
+        let alert = UIAlertController(title: "select a source", message: nil, preferredStyle: .actionSheet)
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            let action = UIAlertAction(title: "Launch Camera", style: .default, handler: { _ in
+                self.launchCamera(picker : picker)
+            })
+            alert.addAction(action)
+        }
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+            let action2 = UIAlertAction(title: "Pick a photo from the Library", style: .default, handler: { _ in
+                self.findInLibrary(picker : picker)
+            })
+            alert.addAction(action2)
+        }
+        let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: {_ in
+                alert.dismiss(animated: true, completion: nil)
+            })
+        alert.addAction(action3)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func launchCamera(picker : UIImagePickerController){
+        picker.sourceType = UIImagePickerControllerSourceType.camera
         self.present(picker, animated: true, completion: nil)
+    }
+    
+    @objc func findInLibrary(picker : UIImagePickerController){
+        picker.sourceType = .photoLibrary
+        self.present(picker, animated: true, completion: nil)
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
