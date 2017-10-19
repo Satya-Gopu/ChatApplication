@@ -135,44 +135,6 @@ class LoginViewController: UIViewController {
             performLogin()
         }
     }
-    func performLogin(){
-        guard let email = emailTextField.text, let password = passwordTextField.text else{
-            return
-        }
-        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-            if error != nil{
-                print("Something went wrong")
-                return
-            }
-            self.dismiss(animated: true, completion: nil)
-        })
-        
-        
-    }
-    func performRegister(){
-        guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else{
-            return
-        }
-        Auth.auth().createUser(withEmail: email, password: password, completion: {
-            (user, error) in
-            if error != nil{
-                
-                print("Invalid credentials")
-                return
-            }
-            
-            let ref = Database.database().reference().child("users").child(user!.uid)
-            ref.updateChildValues(["name": name, "email":email], withCompletionBlock: {
-                (error, ref) in
-                if error != nil{
-                    print("can not save user data")
-                    return
-                }
-                self.dismiss(animated: true, completion: nil)
-            })
-        })
-        
-    }
     
     func setupProfileImageView(){
         NSLayoutConstraint.activate([profileImageView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
