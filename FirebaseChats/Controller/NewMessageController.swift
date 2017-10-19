@@ -17,6 +17,7 @@ class NewMessageController: UITableViewController {
         super.viewDidLoad()
         self.navigationItem.title = "New Message"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissController))
+        self.tableView.register(UserCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         fetchUsers()
     }
     
@@ -56,6 +57,17 @@ class NewMessageController: UITableViewController {
         tableCell!.textLabel?.text = users[indexPath.row].name
         tableCell!.detailTextLabel?.text = users[indexPath.row].email
         return tableCell!
+    }
+}
+
+class UserCell : UITableViewCell{
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }
 
