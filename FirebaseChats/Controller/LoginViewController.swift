@@ -43,12 +43,15 @@ class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(userResponseGiven), for: .touchUpInside)
         return button
     }()
-    let profileImageView : UIImageView = {
+    lazy var profileImageView : UIImageView = {
         let imageview = UIImageView()
         imageview.image = UIImage(named: "profileImage")
         imageview.translatesAutoresizingMaskIntoConstraints = false
+        imageview.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageViewSelected)))
+        imageview.isUserInteractionEnabled = true
        return imageview
     }()
+    
     let nameTextField : UITextField = {
        let tf = UITextField()
         tf.placeholder = "Name"
