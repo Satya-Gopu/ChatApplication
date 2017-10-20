@@ -33,8 +33,7 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
         Auth.auth().createUser(withEmail: email, password: password, completion: {
             (user, error) in
             if error != nil{
-                
-                print("Invalid credentials")
+                print(error?.localizedDescription ?? "error occured while registering")
                 return
             }
             

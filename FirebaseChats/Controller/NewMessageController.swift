@@ -29,6 +29,7 @@ class NewMessageController: UITableViewController {
             let user = User()
             user.email = dictionary["email"] as? String
             user.name = dictionary["name"] as? String
+            user.profileImageURL = dictionary["profileImageUrl"] as? String
             self.users.append(user)
             print(self.users.count)
             DispatchQueue.main.async{
@@ -48,22 +49,52 @@ class NewMessageController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var tableCell : UITableViewCell?
-        if let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier){
-            tableCell = cell
-        }else{
-            tableCell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: cellReuseIdentifier)
-        }
+        let tableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? UserCell
         tableCell!.textLabel?.text = users[indexPath.row].name
         tableCell!.detailTextLabel?.text = users[indexPath.row].email
+        if let url = users[indexPath.row].profileImageURL{
+            let url = URL(string: url)
+            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+                if error == nil, let data = data{
+                    DispatchQueue.main.async {
+                       tableCell?.profileImageView.image = UIImage(data: data)
+                    }
+                }
+            }).resume()
+        }
         return tableCell!
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56.0
     }
 }
 
 class UserCell : UITableViewCell{
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        textLabel?.frame = CGRect(x: 56, y: (textLabel?.frame.origin.y)!, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 56, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        
+        
+    }
+    
+    let profileImageView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "profileImage")
+        imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        self.addSubview(profileImageView)
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8.0).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 40.0).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
