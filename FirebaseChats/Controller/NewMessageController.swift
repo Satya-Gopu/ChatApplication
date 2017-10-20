@@ -52,16 +52,7 @@ class NewMessageController: UITableViewController {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? UserCell
         tableCell!.textLabel?.text = users[indexPath.row].name
         tableCell!.detailTextLabel?.text = users[indexPath.row].email
-        if let url = users[indexPath.row].profileImageURL{
-            let url = URL(string: url)
-            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
-                if error == nil, let data = data{
-                    DispatchQueue.main.async {
-                       tableCell?.profileImageView.image = UIImage(data: data)
-                    }
-                }
-            }).resume()
-        }
+        tableCell?.profileImageView.loadImageFromURL(urlString : users[indexPath.row].profileImageURL)
         return tableCell!
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -73,8 +64,8 @@ class UserCell : UITableViewCell{
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        textLabel?.frame = CGRect(x: 56, y: (textLabel?.frame.origin.y)!, width: textLabel!.frame.width, height: textLabel!.frame.height)
-        detailTextLabel?.frame = CGRect(x: 56, y: detailTextLabel!.frame.origin.y, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+        textLabel?.frame = CGRect(x: 56, y: (textLabel?.frame.origin.y)! - 2.0, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 56, y: detailTextLabel!.frame.origin.y + 2.0, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
         
         
     }

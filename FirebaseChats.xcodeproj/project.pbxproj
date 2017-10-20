@@ -10,6 +10,7 @@
 		2AEE2D0CD4104FF10144A7A1 /* Pods_FirebaseChats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B967DF5D66748150E88D32D6 /* Pods_FirebaseChats.framework */; };
 		522AE9EC1F97D988003E07D8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AE9EB1F97D988003E07D8 /* User.swift */; };
 		522AE9EE1F980802003E07D8 /* LogiViewController+handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AE9ED1F980802003E07D8 /* LogiViewController+handler.swift */; };
+		52511A1D1F99D8CF00CCDCDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52511A1C1F99D8CF00CCDCDD /* Extensions.swift */; };
 		5276D2291F974C6600D863F7 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276D2281F974C6600D863F7 /* NewMessageController.swift */; };
 		527B99B01F969C280067EFBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 527B99AF1F969C280067EFBE /* GoogleService-Info.plist */; };
 		52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD64591F953CF70011546C /* AppDelegate.swift */; };
@@ -36,6 +37,7 @@
 		1D641E4D3F59C3C86168E452 /* Pods-FirebaseChatsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseChatsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseChatsTests/Pods-FirebaseChatsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		522AE9EB1F97D988003E07D8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		522AE9ED1F980802003E07D8 /* LogiViewController+handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogiViewController+handler.swift"; sourceTree = "<group>"; };
+		52511A1C1F99D8CF00CCDCDD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5276D2281F974C6600D863F7 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		527B99AF1F969C280067EFBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		52FD64561F953CF70011546C /* FirebaseChats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirebaseChats.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		52511A1B1F99D8B100CCDCDD /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				52511A1C1F99D8CF00CCDCDD /* Extensions.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		52FD644D1F953CF70011546C = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +137,7 @@
 		52FD64581F953CF70011546C /* FirebaseChats */ = {
 			isa = PBXGroup;
 			children = (
+				52511A1B1F99D8B100CCDCDD /* Helpers */,
 				522AE9EA1F97D965003E07D8 /* Model */,
 				527B99AF1F969C280067EFBE /* GoogleService-Info.plist */,
 				52FD64791F955A100011546C /* Controller */,
@@ -383,6 +394,7 @@
 				52FD645C1F953CF70011546C /* MessagesController.swift in Sources */,
 				522AE9EC1F97D988003E07D8 /* User.swift in Sources */,
 				52FD645A1F953CF70011546C /* AppDelegate.swift in Sources */,
+				52511A1D1F99D8CF00CCDCDD /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
