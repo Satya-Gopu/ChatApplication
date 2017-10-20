@@ -21,6 +21,10 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 print("Something went wrong")
                 return
             }
+            guard let userid = user?.uid else{
+                return
+            }
+            self.messageController.updateNavigationBarTitle(userid: userid)
             self.dismiss(animated: true, completion: nil)
         })
         
@@ -70,6 +74,7 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 print("can not save user data")
                 return
             }
+            self.messageController.navigationItem.title = values["name"] as? String
             self.dismiss(animated: true, completion: nil)
         })
     }

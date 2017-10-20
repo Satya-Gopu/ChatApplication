@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class LoginViewController: UIViewController {
-    
+    var messageController : MessagesController!
     var containerViewHeightConstraint : NSLayoutConstraint?
     var emailTextFieldHeightConstraint : NSLayoutConstraint?
     var passwordFieldHeightConstraint : NSLayoutConstraint?
