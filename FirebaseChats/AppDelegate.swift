@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 
+let imageCache = NSCache<AnyObject, AnyObject>()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

@@ -26,24 +26,23 @@ class MessagesController: UITableViewController {
     }
     
     func isuserLoggedIn(){
-        if Auth.auth().currentUser?.uid == nil{
-            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+        if let userid = Auth.auth().currentUser?.uid{
+            self.updateNavigationBarTitle(userid : userid)
         }
         else{
-            guard let userid = Auth.auth().currentUser?.uid else{
-                return
-            }
-            self.updateNavigationBarTitle(userid : userid)
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
         }
     }
     
     func updateNavigationBarTitle(userid : String){
         Database.database().reference().child("users").child(userid).observeSingleEvent(of: .value, with: {
             (snapshot) in
-            guard let dictionary = snapshot.value as? [String: Any] else{
+            guard let user_dictionary = snapshot.value as? [String: Any] else{
                 return
             }
-            self.navigationItem.title = dictionary["name"] as? String
+            DispatchQueue.main.async {
+                self.navigationItem.setTitleView(title: user_dictionary["name"] as? String, imageURL : user_dictionary["profileImageUrl"] as? String)
+            }
         }, withCancel: { (error) in
             print(error.localizedDescription)
             return
@@ -61,9 +60,33 @@ class MessagesController: UITableViewController {
         loginController.messageController = self
         present(loginController, animated: true, completion: nil)
     }
+}
 
+extension UINavigationItem{
     
-
-
+    func setTitleView(title : String?, imageURL : String?){
+        guard let title = title, let url = imageURL else {
+            return
+        }
+        let stackView = UIStackView()
+        stackView.alignment = UIStackViewAlignment.center
+        stackView.distribution = .equalCentering
+        stackView.clipsToBounds = true
+        stackView.axis = .horizontal
+        stackView.spacing = 5.0
+        let imageView = UIImageView()
+        imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 20
+        imageView.layer.masksToBounds = true
+        imageView.loadImageFromURL(urlString: url)
+        stackView.addArrangedSubview(imageView)
+        let attributes = [NSAttributedStringKey.font : UIFont(name: "Chalkduster", size: 17.0) as Any]
+        let atributeString = NSAttributedString(string: title, attributes: attributes)
+        let label = UILabel()
+        label.attributedText = atributeString
+        stackView.addArrangedSubview(label)
+        self.titleView = stackView
+    }
 }
 

@@ -24,11 +24,11 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
             guard let userid = user?.uid else{
                 return
             }
-            self.messageController.updateNavigationBarTitle(userid: userid)
-            self.dismiss(animated: true, completion: nil)
-        })
-        
-        
+            DispatchQueue.main.async {
+                self.messageController.updateNavigationBarTitle(userid: userid)
+                self.dismiss(animated: true, completion: nil)
+            }
+         })
     }
     func performRegister(){
         guard let email = emailTextField.text, let password = passwordTextField.text, let name = nameTextField.text else{
@@ -40,8 +40,6 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 print(error?.localizedDescription ?? "error occured while registering")
                 return
             }
-            
-            //Store profile image in the cloud storage
             guard let uid = user?.uid else{
                 return
             }
@@ -50,7 +48,7 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
             guard let image = self.profileImageView.image else{
                 return
             }
-            guard let imageData = UIImagePNGRepresentation(image) else{
+            guard let imageData = UIImageJPEGRepresentation(image, 0.1) else{
                 return
             }
             fileRef.putData(imageData, metadata: nil, completion: { (metaData, error) in
@@ -61,6 +59,7 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 guard let imageURL = metaData?.downloadURL()?.absoluteString else{
                     return
                 }
+                imageCache.setObject(image, forKey: imageURL as AnyObject)
                 self.storeUserData(uid: uid, values: ["name": name, "email": email, "profileImageUrl": imageURL])
             })
         })
@@ -74,8 +73,10 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 print("can not save user data")
                 return
             }
-            self.messageController.navigationItem.title = values["name"] as? String
-            self.dismiss(animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.messageController.navigationItem.setTitleView(title: values["name"] as? String, imageURL: values["profileImageUrl"] as? String)
+                self.dismiss(animated: true, completion: nil)
+            }
         })
     }
     
@@ -132,9 +133,4 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
         }
         dismiss(animated: true, completion: nil)
     }
-    
-    
-    
-    
-    
 }
