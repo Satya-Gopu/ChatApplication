@@ -10,6 +10,7 @@
 		2AEE2D0CD4104FF10144A7A1 /* Pods_FirebaseChats.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B967DF5D66748150E88D32D6 /* Pods_FirebaseChats.framework */; };
 		522AE9EC1F97D988003E07D8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AE9EB1F97D988003E07D8 /* User.swift */; };
 		522AE9EE1F980802003E07D8 /* LogiViewController+handler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522AE9ED1F980802003E07D8 /* LogiViewController+handler.swift */; };
+		524821871F9DB95E00ED3661 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524821861F9DB95E00ED3661 /* ChatLogController.swift */; };
 		52511A1D1F99D8CF00CCDCDD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52511A1C1F99D8CF00CCDCDD /* Extensions.swift */; };
 		5276D2291F974C6600D863F7 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5276D2281F974C6600D863F7 /* NewMessageController.swift */; };
 		527B99B01F969C280067EFBE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 527B99AF1F969C280067EFBE /* GoogleService-Info.plist */; };
@@ -37,6 +38,7 @@
 		1D641E4D3F59C3C86168E452 /* Pods-FirebaseChatsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FirebaseChatsTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FirebaseChatsTests/Pods-FirebaseChatsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		522AE9EB1F97D988003E07D8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		522AE9ED1F980802003E07D8 /* LogiViewController+handler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogiViewController+handler.swift"; sourceTree = "<group>"; };
+		524821861F9DB95E00ED3661 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		52511A1C1F99D8CF00CCDCDD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5276D2281F974C6600D863F7 /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		527B99AF1F969C280067EFBE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				52FD645B1F953CF70011546C /* MessagesController.swift */,
 				5276D2281F974C6600D863F7 /* NewMessageController.swift */,
 				522AE9ED1F980802003E07D8 /* LogiViewController+handler.swift */,
+				524821861F9DB95E00ED3661 /* ChatLogController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -388,6 +391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				524821871F9DB95E00ED3661 /* ChatLogController.swift in Sources */,
 				5276D2291F974C6600D863F7 /* NewMessageController.swift in Sources */,
 				52FD647B1F955A9D0011546C /* LoginViewController.swift in Sources */,
 				522AE9EE1F980802003E07D8 /* LogiViewController+handler.swift in Sources */,

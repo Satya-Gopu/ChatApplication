@@ -17,12 +17,23 @@ class MessagesController: UITableViewController {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
+        if self.view == nil{
+            print("nil")
+        }
+        if self.tableView == nil{
+            print("tableview")
+        }
+        if self.view == self.tableView{
+            print("same")
+        }
         self.isuserLoggedIn()
     }
     
-   @objc func handleNewMessage(){
-        let newMessageController = NewMessageController()
-        present(UINavigationController(rootViewController : newMessageController), animated: true, completion: nil)
+    @objc func handleNewMessage(){
+        let chatlog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        self.navigationController?.pushViewController(chatlog, animated: true)
+       // let newMessageController = NewMessageController()
+        //present(UINavigationController(rootViewController : newMessageController), animated: true, completion: nil)
     }
     
     func isuserLoggedIn(){
