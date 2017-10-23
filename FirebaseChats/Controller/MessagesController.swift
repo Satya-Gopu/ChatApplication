@@ -41,7 +41,8 @@ class MessagesController: UITableViewController {
                 return
             }
             DispatchQueue.main.async {
-                self.navigationItem.setTitleView(title: user_dictionary["name"] as? String, imageURL : user_dictionary["profileImageUrl"] as? String)
+                let navigationbarHeight = self.navigationController?.navigationBar.frame.height
+                self.navigationItem.setTitleView(title: user_dictionary["name"] as? String, imageURL : user_dictionary["profileImageUrl"] as? String, navigationBarHeight: navigationbarHeight)
             }
         }, withCancel: { (error) in
             print(error.localizedDescription)
@@ -64,28 +65,40 @@ class MessagesController: UITableViewController {
 
 extension UINavigationItem{
     
-    func setTitleView(title : String?, imageURL : String?){
+    func setTitleView(title : String?, imageURL : String?, navigationBarHeight : CGFloat?){
         guard let title = title, let url = imageURL else {
             return
         }
         let stackView = UIStackView()
-        stackView.alignment = UIStackViewAlignment.center
-        stackView.distribution = .equalCentering
-        stackView.clipsToBounds = true
         stackView.axis = .horizontal
-        stackView.spacing = 5.0
+        stackView.alignment = .center
+        stackView.spacing = 8.0
+        
+        
         let imageView = UIImageView()
-        imageView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 20
-        imageView.layer.masksToBounds = true
         imageView.loadImageFromURL(urlString: url)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 20.0
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        if let imageheight  = navigationBarHeight{
+            imageView.heightAnchor.constraint(equalToConstant: imageheight - 4.0).isActive = true
+            imageView.layer.cornerRadius = (imageheight - 4.0)/2
+        }
+        else{
+            imageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        }
+        
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
         stackView.addArrangedSubview(imageView)
+        
         let attributes = [NSAttributedStringKey.font : UIFont(name: "Chalkduster", size: 17.0) as Any]
         let atributeString = NSAttributedString(string: title, attributes: attributes)
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = atributeString
         stackView.addArrangedSubview(label)
+        
         self.titleView = stackView
     }
 }

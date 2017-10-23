@@ -74,7 +74,8 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 return
             }
             DispatchQueue.main.async {
-                self.messageController.navigationItem.setTitleView(title: values["name"] as? String, imageURL: values["profileImageUrl"] as? String)
+                let height = self.messageController.navigationController?.navigationBar.frame.height
+                self.messageController.navigationItem.setTitleView(title: values["name"] as? String, imageURL: values["profileImageUrl"] as? String, navigationBarHeight: height)
                 self.dismiss(animated: true, completion: nil)
             }
         })
