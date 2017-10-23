@@ -12,7 +12,11 @@ import Firebase
 class NewMessageController: UITableViewController {
     let cellReuseIdentifier = "cell"
     var users = [User]()
-
+    lazy var executeBlock : () = {[weak self] in
+        DispatchQueue.main.async{
+            self!.tableView.reloadData()
+        }
+    }()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "New Message"
@@ -32,9 +36,7 @@ class NewMessageController: UITableViewController {
             user.profileImageURL = dictionary["profileImageUrl"] as? String
             self.users.append(user)
             print(self.users.count)
-            DispatchQueue.main.async{
-                self.tableView.reloadData()
-            }
+            _ = self.executeBlock
             }) { (error) in
                 print(error.localizedDescription)
         }
