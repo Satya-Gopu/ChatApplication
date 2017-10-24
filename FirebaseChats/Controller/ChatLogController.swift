@@ -66,15 +66,14 @@ class ChatLogController : UICollectionViewController{
         seperator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
         seperator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         seperator.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0.0).isActive = true
-        
-        
     }
     
     @objc func sendButtonClicked(){
-        let value = ["message": messagesTextField.text!, "name": "satya"] as [String: Any]
-        databaseRef.child("messages").setValue(value)
-        print("send clicked")
-        
+        let senderId = Auth.auth().currentUser?.uid
+        let timestamp = Int(Date().timeIntervalSince1970)
+        let value = ["message": messagesTextField.text!, "receiverId": (user?.id)!, "senderId" : senderId!, "timestamp" : timestamp] as [String: Any]
+        databaseRef.child("messages").childByAutoId().setValue(value)
+        self.messagesTextField.text = ""
     }
 }
 

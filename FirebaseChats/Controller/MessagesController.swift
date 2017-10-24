@@ -10,11 +10,12 @@ import UIKit
 import Firebase
 
 class MessagesController: UITableViewController {
-    
-    var ref : DatabaseReference!
+    var messages : [Message] = []
+    var dataBaseRef : DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataBaseRef = Database.database().reference()
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
         if self.view == nil{
@@ -26,7 +27,27 @@ class MessagesController: UITableViewController {
         if self.view == self.tableView{
             print("same")
         }
+        self.observeMessages()
         self.isuserLoggedIn()
+    }
+    
+    func observeMessages(){
+        dataBaseRef.child("messages").observe(.childAdded, with: { (snapshot) in
+            if let messageDict = snapshot.value as? [String : Any]{
+                var message = Message()
+                message.content = messageDict["message"] as? String
+                message.receiverId = messageDict["recieverId"] as? String
+                message.senderId = messageDict["senderId"] as? String
+                message.timestamp = messageDict["timestamp"] as? Int
+                self.messages.append(message)
+            }
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
+            }) { (error) in
+            print(error.localizedDescription)
+           }
     }
     
     @objc func handleNewMessage(){
@@ -76,6 +97,16 @@ class MessagesController: UITableViewController {
         let loginController = LoginViewController()
         loginController.messageController = self
         present(loginController, animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        cell.textLabel?.text = messages[indexPath.row].content
+        return cell
     }
 }
 

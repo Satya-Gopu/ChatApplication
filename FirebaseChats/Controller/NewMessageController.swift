@@ -32,6 +32,7 @@ class NewMessageController: UITableViewController {
                 return
             }
             let user = User()
+            user.id = snapshot.key
             user.email = dictionary["email"] as? String
             user.name = dictionary["name"] as? String
             user.profileImageURL = dictionary["profileImageUrl"] as? String
