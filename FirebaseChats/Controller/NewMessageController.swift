@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 
 class NewMessageController: UITableViewController {
+    var messageController : MessagesController!
     let cellReuseIdentifier = "cell"
     var users = [User]()
     lazy var executeBlock : () = {[weak self] in
@@ -59,6 +60,12 @@ class NewMessageController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 62.0
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.dismiss(animated: true, completion: {
+            self.messageController.showChatLogController(user: self.users[indexPath.row])
+        })
     }
 }
 

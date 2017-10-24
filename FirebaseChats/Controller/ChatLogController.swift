@@ -10,13 +10,16 @@ import UIKit
 import Firebase
 
 class ChatLogController : UICollectionViewController{
+    
+    var user: User?
     var messagesTextField : UITextField!
     var databaseRef : DatabaseReference = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView?.backgroundColor = UIColor.white
-        self.navigationItem.title = "Chats"
+        self.navigationItem.setTitleView(title: user?.name, imageURL: user?.profileImageURL, navigationBarHeight: nil)
+        //self.navigationItem.title = user?.name
         setUpInputComponents()
     }
     

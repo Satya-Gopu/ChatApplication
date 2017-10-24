@@ -30,10 +30,15 @@ class MessagesController: UITableViewController {
     }
     
     @objc func handleNewMessage(){
-        let chatlog = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-        self.navigationController?.pushViewController(chatlog, animated: true)
-       // let newMessageController = NewMessageController()
-        //present(UINavigationController(rootViewController : newMessageController), animated: true, completion: nil)
+       let newMessageController = NewMessageController()
+        newMessageController.messageController = self
+        present(UINavigationController(rootViewController : newMessageController), animated: true, completion: nil)
+    }
+    
+    func showChatLogController(user : User?){
+        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
+        self.navigationController?.pushViewController(chatLogController, animated: true)
     }
     
     func isuserLoggedIn(){
