@@ -10,7 +10,9 @@ import UIKit
 import Firebase
 
 class MessagesController: UITableViewController {
+    let reuseIdentifier  = "tablecell"
     var messages : [Message] = []
+    var messageDict : [String : Message] = [:]
     var dataBaseRef : DatabaseReference!
     lazy var performReload : () = {
         DispatchQueue.main.async {
@@ -21,6 +23,7 @@ class MessagesController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dataBaseRef = Database.database().reference()
+        self.tableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifier)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
         if self.view == nil{
@@ -36,15 +39,26 @@ class MessagesController: UITableViewController {
         self.isuserLoggedIn()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
+    }
+    
     func observeMessages(){
         dataBaseRef.child("messages").observe(.childAdded, with: { (snapshot) in
             if let messageDict = snapshot.value as? [String : Any]{
                 var message = Message()
                 message.content = messageDict["message"] as? String
-                message.receiverId = messageDict["recieverId"] as? String
+                message.receiverId = messageDict["receiverId"] as? String
                 message.senderId = messageDict["senderId"] as? String
                 message.timestamp = messageDict["timestamp"] as? Int
-                self.messages.append(message)
+                if let recieverId = message.receiverId{
+                    self.messageDict[recieverId] = message
+                    self.messages = Array(self.messageDict.values)
+                    self.messages.sort(by: { (m1, m2) -> Bool in
+                        return m1.timestamp! > m2.timestamp!
+                    })
+                }
             }
             _ = self.performReload
             
@@ -105,10 +119,14 @@ class MessagesController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.messages.count
     }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 62.0
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
-        cell.textLabel?.text = messages[indexPath.row].content
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
+        let message = messages[indexPath.row]
+        cell.message = message
         return cell
     }
 }
