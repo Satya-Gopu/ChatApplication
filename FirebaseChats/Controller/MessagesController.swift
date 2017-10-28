@@ -46,14 +46,7 @@ class MessagesController: UITableViewController {
                     message.receiverId = messageDict["receiverId"] as? String
                     message.senderId = messageDict["senderId"] as? String
                     message.timestamp = messageDict["timestamp"] as? Int
-                    var otherUser : String?
-                    if userID == message.receiverId{
-                        otherUser = message.senderId
-                    }
-                    else{
-                        otherUser = message.receiverId
-                    }
-                    if let otherUser = otherUser{
+                    if let otherUser = message.charPartnerId(){
                         self.messageDict[otherUser] = message
                         self.messages = Array(self.messageDict.values)
                         self.messages.sort(by: { (m1, m2) -> Bool in
@@ -109,6 +102,8 @@ class MessagesController: UITableViewController {
     
     @objc func handleLogout(){
         do{
+            self.messages.removeAll()
+            self.messageDict.removeAll()
             try Auth.auth().signOut()
         }catch let error{
             print(error.localizedDescription)

@@ -26,6 +26,7 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
             }
             DispatchQueue.main.async {
                 self.messageController.updateNavigationBarTitle(userid: userid)
+                self.messageController.observUserMessages()
                 self.dismiss(animated: true, completion: nil)
             }
          })
@@ -76,6 +77,7 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
             DispatchQueue.main.async {
                 let height = self.messageController.navigationController?.navigationBar.frame.height
                 self.messageController.navigationItem.setTitleView(title: values["name"] as? String, imageURL: values["profileImageUrl"] as? String, navigationBarHeight: height)
+                self.messageController.observUserMessages()
                 self.dismiss(animated: true, completion: nil)
             }
         })
