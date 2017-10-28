@@ -21,8 +21,8 @@ class ChatCollectionViewCell: UICollectionViewCell {
         addSubview(textLabel)
         textLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         textLabel.adjustsFontSizeToFitWidth = true
-        textLabel.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        textLabel.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        textLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10).isActive = true
+        textLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
     }
     
     func adjustAllignment(allignment : String){
