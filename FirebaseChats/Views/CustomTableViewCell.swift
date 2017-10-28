@@ -13,7 +13,14 @@ class UserCell : UITableViewCell{
     
     var message : Message?{
         didSet{
-            if let userid = message?.receiverId{
+            var otherUser : String?
+            if Auth.auth().currentUser?.uid == message?.senderId{
+                otherUser = message?.receiverId
+            }
+            else{
+                otherUser = message?.senderId
+            }
+            if let userid = otherUser{
                 Database.database().reference().child("users").child(userid).observeSingleEvent(of: .value, with: { (snapshot) in
                     if let userdict = snapshot.value as? [String: Any]{
                         DispatchQueue.main.async {
@@ -22,7 +29,7 @@ class UserCell : UITableViewCell{
                             if let timestamp = self.message?.timestamp{
                                 let doubleStamp = Double(timestamp)
                                 let dateformatter = DateFormatter()
-                                dateformatter.dateFormat = "hh:mm:ss a"
+                                dateformatter.dateFormat = "MM/dd/yy hh:mm a"
                                 self.timeLabel.text = dateformatter.string(from: Date(timeIntervalSince1970: doubleStamp))
                             }
                             if let profileImageUrl = userdict["profileImageUrl"] as? String{
@@ -56,7 +63,6 @@ class UserCell : UITableViewCell{
     
     let timeLabel : UILabel = {
         let label = UILabel()
-        label.text = "HH:MM PM"
         label.font = UIFont.systemFont(ofSize: 11)
         label.textColor = UIColor.lightGray
         label.translatesAutoresizingMaskIntoConstraints = false

@@ -13,7 +13,7 @@ class MessagesController: UITableViewController {
     let reuseIdentifier  = "tablecell"
     var messages : [Message] = []
     var messageDict : [String : Message] = [:]
-    var dataBaseRef : DatabaseReference!
+    var dataBaseRef : DatabaseReference = Database.database().reference()
     lazy var performReload : () = {
         DispatchQueue.main.async {
             self.tableView.reloadData()
@@ -22,20 +22,10 @@ class MessagesController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataBaseRef = Database.database().reference()
         self.tableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifier)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
-        if self.view == nil{
-            print("nil")
-        }
-        if self.tableView == nil{
-            print("tableview")
-        }
-        if self.view == self.tableView{
-            print("same")
-        }
-        self.observeMessages()
+        self.observUserMessages()
         self.isuserLoggedIn()
     }
     
@@ -44,27 +34,40 @@ class MessagesController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func observeMessages(){
-        dataBaseRef.child("messages").observe(.childAdded, with: { (snapshot) in
-            if let messageDict = snapshot.value as? [String : Any]{
-                var message = Message()
-                message.content = messageDict["message"] as? String
-                message.receiverId = messageDict["receiverId"] as? String
-                message.senderId = messageDict["senderId"] as? String
-                message.timestamp = messageDict["timestamp"] as? Int
-                if let recieverId = message.receiverId{
-                    self.messageDict[recieverId] = message
-                    self.messages = Array(self.messageDict.values)
-                    self.messages.sort(by: { (m1, m2) -> Bool in
-                        return m1.timestamp! > m2.timestamp!
-                    })
+    func observUserMessages(){
+        guard let userID = Auth.auth().currentUser?.uid else{
+            return
+        }
+        dataBaseRef.child("user messages").child(userID).observe(.childAdded, with: { (snapshot) in
+            self.dataBaseRef.child("messages").child(snapshot.key).observeSingleEvent(of: .value, with: { (snapshot) in
+                if let messageDict = snapshot.value as? [String : Any]{
+                    var message = Message()
+                    message.content = messageDict["message"] as? String
+                    message.receiverId = messageDict["receiverId"] as? String
+                    message.senderId = messageDict["senderId"] as? String
+                    message.timestamp = messageDict["timestamp"] as? Int
+                    var otherUser : String?
+                    if userID == message.receiverId{
+                        otherUser = message.senderId
+                    }
+                    else{
+                        otherUser = message.receiverId
+                    }
+                    if let otherUser = otherUser{
+                        self.messageDict[otherUser] = message
+                        self.messages = Array(self.messageDict.values)
+                        self.messages.sort(by: { (m1, m2) -> Bool in
+                            return m1.timestamp! > m2.timestamp!
+                        })
+                    }
                 }
-            }
-            _ = self.performReload
-            
-            }) { (error) in
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            })
+        }) { (error) in
             print(error.localizedDescription)
-           }
+        }
     }
     
     @objc func handleNewMessage(){

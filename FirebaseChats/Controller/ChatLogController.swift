@@ -69,10 +69,20 @@ class ChatLogController : UICollectionViewController{
     }
     
     @objc func sendButtonClicked(){
-        let senderId = Auth.auth().currentUser?.uid
+        guard let messageText = self.messagesTextField.text,let senderId = Auth.auth().currentUser?.uid, let receiverId = self.user?.id else{
+            print("unable to sendmessage")
+            return
+        }
         let timestamp = Int(Date().timeIntervalSince1970)
-        let value = ["message": messagesTextField.text!, "receiverId": (user?.id)!, "senderId" : senderId!, "timestamp" : timestamp] as [String: Any]
-        databaseRef.child("messages").childByAutoId().setValue(value)
+        let value = ["message": messageText, "receiverId": receiverId, "senderId" : senderId, "timestamp" : timestamp] as [String: Any]
+        databaseRef.child("messages").childByAutoId().setValue(value) { (error, ref) in
+            if error != nil{
+                print(error?.localizedDescription ?? "error occured")
+            }
+            
+            self.databaseRef.child("user messages").child(senderId).updateChildValues([ref.key:1])
+            self.databaseRef.child("user messages").child(receiverId).updateChildValues([ref.key:1])
+        }
         self.messagesTextField.text = ""
     }
 }
