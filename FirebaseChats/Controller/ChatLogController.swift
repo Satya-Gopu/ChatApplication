@@ -12,15 +12,74 @@ import Firebase
 class ChatLogController : UICollectionViewController{
     
     var user: User?
+    var messages : [Message] = []
     var messagesTextField : UITextField!
+    lazy var performReload : () = {
+        DispatchQueue.main.async {
+            self.messages.sort(by: { (message1, message2) -> Bool in
+                return message1.timestamp! > message2.timestamp!
+            })
+            self.collectionView?.reloadData()
+        }
+    }()
     var databaseRef : DatabaseReference = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.observMessages()
+        self.collectionView?.alwaysBounceVertical = true
+        self.collectionView?.register(ChatCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         self.collectionView?.backgroundColor = UIColor.white
-        self.navigationItem.setTitleView(title: user?.name, imageURL: user?.profileImageURL, navigationBarHeight: nil)
-        //self.navigationItem.title = user?.name
+        self.navigationItem.setTitleView(title: user?.name, imageURL: user?.profileImageUrl, navigationBarHeight: nil)
         setUpInputComponents()
+    }
+    
+    func observMessages(){
+        guard let currentUserId = Auth.auth().currentUser?.uid else{
+            return
+        }
+        self.databaseRef.child("user messages").child(currentUserId).observe(.childAdded) { (snapshot) in
+            let messageId = snapshot.key
+            self.databaseRef.child("messages").child(messageId).observeSingleEvent(of: .value, with: { (snapshot) in
+                guard let messageDict = snapshot.value as? [String: Any] else{
+                    return
+                }
+                if messageDict["senderId"] as? String == self.user?.id || messageDict["receiverId"] as? String == self.user?.id{
+                    var message = Message()
+                    message.senderId = messageDict["senderId"] as? String
+                    message.content = messageDict["message"] as? String
+                    message.receiverId = messageDict["receiverId"] as? String
+                    message.timestamp = messageDict["timestamp"] as? Int
+                    self.messages.append(message)
+                }
+                DispatchQueue.main.async {
+                    self.messages.sort(by: { (message1, message2) -> Bool in
+                        return message1.timestamp! < message2.timestamp!
+                    })
+                    self.collectionView?.reloadData()
+                }
+            }, withCancel: { (error) in
+                print(error.localizedDescription)
+            })
+            
+        }
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.messages.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ChatCollectionViewCell
+        let message = messages[indexPath.item]
+        cell.textLabel.text = message.content
+        if message.senderId == Auth.auth().currentUser?.uid{
+            cell.adjustAllignment(allignment: "right")
+        }else{
+            cell.adjustAllignment(allignment: "left")
+        }
+        return cell
     }
     
     func setUpInputComponents(){
@@ -92,5 +151,10 @@ extension ChatLogController : UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         sendButtonClicked()
         return true
+    }
+}
+extension ChatLogController : UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 40)
     }
 }

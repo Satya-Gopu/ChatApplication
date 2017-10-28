@@ -121,6 +121,23 @@ class MessagesController: UITableViewController {
         return 62.0
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let chatPartnerId = self.messages[indexPath.row].charPartnerId() else{
+           return
+        }
+        dataBaseRef.child("users").child(chatPartnerId).observeSingleEvent(of: .value) { (snapshot) in
+            guard let userDict = snapshot.value as? [String : Any] else{
+                return
+            }
+            let user = User()
+            user.email = userDict["email"] as? String
+            user.id = chatPartnerId
+            user.name = userDict["name"] as? String
+            user.profileImageUrl = userDict["profileImageUrl"] as? String
+            self.showChatLogController(user: user)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
         let message = messages[indexPath.row]

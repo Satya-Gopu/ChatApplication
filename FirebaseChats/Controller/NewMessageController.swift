@@ -35,7 +35,7 @@ class NewMessageController: UITableViewController {
             user.id = snapshot.key
             user.email = dictionary["email"] as? String
             user.name = dictionary["name"] as? String
-            user.profileImageURL = dictionary["profileImageUrl"] as? String
+            user.profileImageUrl = dictionary["profileImageUrl"] as? String
             self.users.append(user)
             print(self.users.count)
             _ = self.executeBlock
@@ -56,7 +56,7 @@ class NewMessageController: UITableViewController {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as? UserCell
         tableCell!.textLabel?.text = users[indexPath.row].name
         tableCell!.detailTextLabel?.text = users[indexPath.row].email
-        tableCell?.profileImageView.loadImageFromURL(urlString : users[indexPath.row].profileImageURL)
+        tableCell?.profileImageView.loadImageFromURL(urlString : users[indexPath.row].profileImageUrl)
         return tableCell!
     }
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
