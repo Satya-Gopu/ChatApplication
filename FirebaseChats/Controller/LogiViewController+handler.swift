@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 
-extension LoginViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+extension LoginViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
     
     func performLogin(){
         guard let email = emailTextField.text, let password = passwordTextField.text else{
@@ -25,9 +25,12 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 return
             }
             DispatchQueue.main.async {
-                self.messageController.updateNavigationBarTitle(userid: userid)
-                self.messageController.observUserMessages()
-                self.dismiss(animated: true, completion: nil)
+                self.emailTextField.text = ""
+                self.passwordTextField.text = ""
+                let messageController = MessagesController()
+                messageController.updateNavigationBarTitle(userid: userid)
+                messageController.observUserMessages()
+                self.present(UINavigationController(rootViewController : messageController), animated: true, completion: nil)
             }
          })
     }
@@ -75,10 +78,13 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
                 return
             }
             DispatchQueue.main.async {
-                let height = self.messageController.navigationController?.navigationBar.frame.height
-                self.messageController.navigationItem.setTitleView(title: values["name"] as? String, imageURL: values["profileImageUrl"] as? String, navigationBarHeight: height)
-                self.messageController.observUserMessages()
-                self.dismiss(animated: true, completion: nil)
+                self.nameTextField.text = ""
+                self.emailTextField.text = ""
+                self.passwordTextField.text = ""
+                let messageController = MessagesController()
+                messageController.updateNavigationBarTitle(userid: uid)
+                messageController.observUserMessages()
+                self.present(UINavigationController(rootViewController : messageController), animated: true, completion: nil)
             }
         })
     }
@@ -92,9 +98,9 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func presentAlert(picker : UIImagePickerController){
-        let alert = UIAlertController(title: "select a source", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "set profileImage", message: nil, preferredStyle: .actionSheet)
         if UIImagePickerController.isSourceTypeAvailable(.camera){
-            let action = UIAlertAction(title: "Launch Camera", style: .default, handler: { _ in
+            let action = UIAlertAction(title: "Launch Camera to take a photo", style: .default, handler: { _ in
                 self.launchCamera(picker : picker)
             })
             alert.addAction(action)
@@ -135,5 +141,21 @@ extension LoginViewController : UIImagePickerControllerDelegate, UINavigationCon
             
         }
         dismiss(animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case nameTextField:
+            emailTextField.becomeFirstResponder()
+        case emailTextField:
+            passwordTextField.becomeFirstResponder()
+        default:
+            if self.loginRegisterSegmentedControl.selectedSegmentIndex == 0{
+                self.performLogin()
+            }else{
+                self.performRegister()
+            }
+        }
+        return true
     }
 }

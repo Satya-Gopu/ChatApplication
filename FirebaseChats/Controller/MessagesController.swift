@@ -25,8 +25,10 @@ class MessagesController: UITableViewController {
         self.tableView.register(UserCell.self, forCellReuseIdentifier: reuseIdentifier)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleNewMessage))
+        if let userId = Auth.auth().currentUser?.uid{
+            self.updateNavigationBarTitle(userid: userId)
+        }
         self.observUserMessages()
-        self.isuserLoggedIn()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,10 +110,7 @@ class MessagesController: UITableViewController {
         }catch let error{
             print(error.localizedDescription)
         }
-        
-        let loginController = LoginViewController()
-        loginController.messageController = self
-        present(loginController, animated: true, completion: nil)
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

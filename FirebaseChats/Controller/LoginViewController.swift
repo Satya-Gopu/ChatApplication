@@ -10,7 +10,6 @@ import UIKit
 import Firebase
 
 class LoginViewController: UIViewController {
-    var messageController : MessagesController!
     var containerViewHeightConstraint : NSLayoutConstraint?
     var emailTextFieldHeightConstraint : NSLayoutConstraint?
     var passwordFieldHeightConstraint : NSLayoutConstraint?
@@ -37,6 +36,7 @@ class LoginViewController: UIViewController {
         let button = UIButton(type: UIButtonType.system)
         button.backgroundColor = UIColor(red: 80, green: 101, blue: 161)
         button.setTitle("Register", for: .normal)
+        button.layer.cornerRadius = 5
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -52,9 +52,11 @@ class LoginViewController: UIViewController {
        return imageview
     }()
     
-    let nameTextField : UITextField = {
+    lazy var nameTextField : UITextField = {
        let tf = UITextField()
         tf.placeholder = "Name"
+        tf.returnKeyType = .next
+        tf.delegate = self
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -64,9 +66,12 @@ class LoginViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let emailTextField : UITextField = {
+    lazy var emailTextField : UITextField = {
         let tf = UITextField()
+        tf.delegate = self
         tf.placeholder = "Email"
+        tf.keyboardType = .emailAddress
+        tf.returnKeyType = .next
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -76,10 +81,12 @@ class LoginViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    let passwordTextField : UITextField = {
+    lazy var passwordTextField : UITextField = {
         let tf = UITextField()
         tf.placeholder = "Password"
+        tf.delegate = self
         tf.isSecureTextEntry = true
+        tf.returnKeyType = .go
         tf.translatesAutoresizingMaskIntoConstraints = false
         return tf
     }()
@@ -90,6 +97,8 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        isuserLoggedIn()
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
         self.view.backgroundColor = UIColor(red:61, green: 91, blue: 151)
         self.view.addSubview(inputContainerView)
         self.view.addSubview(profileImageView)
@@ -99,6 +108,17 @@ class LoginViewController: UIViewController {
         setupLoginRegisterButton()
         setupSegmentControl()
         setupProfileImageView()
+    }
+    
+    func isuserLoggedIn(){
+        if Auth.auth().currentUser?.uid != nil{
+            let nav = UINavigationController(rootViewController: MessagesController())
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func viewTapped(){
+        self.view.endEditing(true)
     }
     
     func setupSegmentControl(){
@@ -197,6 +217,7 @@ class LoginViewController: UIViewController {
         
     }
 }
+
 
 extension UIColor{
     convenience init(red : CGFloat, green: CGFloat, blue : CGFloat){
