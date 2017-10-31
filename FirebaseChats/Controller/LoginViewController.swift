@@ -97,7 +97,6 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        isuserLoggedIn()
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(viewTapped)))
         self.view.backgroundColor = UIColor(red:61, green: 91, blue: 151)
         self.view.addSubview(inputContainerView)
@@ -108,6 +107,11 @@ class LoginViewController: UIViewController {
         setupLoginRegisterButton()
         setupSegmentControl()
         setupProfileImageView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.isuserLoggedIn()
     }
     
     func isuserLoggedIn(){
